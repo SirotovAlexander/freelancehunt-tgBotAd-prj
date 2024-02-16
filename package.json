@@ -17,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/SirotovAlexander/freelancehunt-tgBotAd-prj/issues"
   },
-  "homepage": "https://github.com/SirotovAlexander/freelancehunt-tgBotAd-prj#readme"
+  "homepage": "https://github.com/SirotovAlexander/freelancehunt-tgBotAd-prj#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.4",
+    "express": "^4.18.2",
+    "node-telegram-bot-api": "^0.64.0",
+    "nodemon": "^3.0.3"
+  }
 }
