@@ -1,3 +1,17 @@
 const TelegramBot = require("node-telegram-bot-api");
+const axios = require("axios");
 require("dotenv").config();
-console.log(process.env);
+
+const bot = new TelegramBot(process.env.API_KEY_BOT, {
+  polling: {
+    interval: 2000,
+    autoStart: true,
+  },
+});
+
+// console.log(process.env.API_KEY_BOT);
+// bot.on("polling_error", (err) => console.log(err.data.error.message));
+bot.on("text", async (msg) => {
+  //   console.log(msg);
+  await bot.sendMessage("@pidortestIdinahuy", msg.text);
+});
