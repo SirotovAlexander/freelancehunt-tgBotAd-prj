@@ -31,14 +31,14 @@ const client = new TelegramClient(session, apiId, apiHash, {});
   const result = await client.invoke(
     new Api.messages.SendMessage({
       // peer: "two_face_project",
-      peer: "ceasar1995",
-      message: "Hello there@!!",
-      randomId: BigInt("-4156887774564"),
       noWebpage: true,
-      noforwards: true,
-      scheduleDate: 43,
+      background: true,
       clearDraft: true,
-      // sendAs: "two_face_project",
+      peer: "https://t.me/testTGUSERBOtt",
+      replyToMsgId: 6872073,
+      message: "Hello Thereйцуйцу!",
+      randomId: Math.floor(Math.random() * 1000000),
+      scheduleDate: 789917,
     })
   );
   console.log(result); // prints the result
