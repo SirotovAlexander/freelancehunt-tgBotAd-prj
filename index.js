@@ -60,83 +60,60 @@ bot.on("text", async (msg) => {
       await bot.sendMessage(msg.chat.id, `Введи список каналов.`);
       bot.on("text", async (msg) => {
         if (msg.text.startsWith("http")) {
-          const strToArr = msg.text.split(",");
-          const newArr = strToArr.map((item) => item.trim());
-          chanelList.push(...newArr);
+          const strToArr = msg.text.split(" ").filter((item) => item !== "");
+
+          chanelList = null;
+          chanelList = strToArr;
           await bot.sendMessage(msg.chat.id, `Cписок каналов Сохранен!`);
         }
       });
     } else if (msg.text == "/listcheck") {
       await bot.sendMessage(
         msg.chat.id,
-        `<b>${adMessage}</b>\n<b>${chanelList}</b>`,
+        `<b>${adMessage || "Реклама не создана"}</b>\n<b>${
+          chanelList || "Массив каналов не создан"
+        }</b>`,
         {
           parse_mode: "HTML",
         }
       );
-      console.log(chanelList);
     } else if (msg.text == "/flood") {
       if (adMessage === null) {
         await bot.sendMessage(msg.chat.id, "Созайте рекламное сообщение!");
-      }
-      if (chanelList[0] === undefined) {
+      } else if (chanelList[0] === undefined) {
         await bot.sendMessage(
           msg.chat.id,
           "Заполните список каналов для рассылки!"
         );
+      } else {
+        (async function run() {
+          await client.connect(); // This assumes you have already authenticated with .start()
+
+          for (let i = 0; i < chanelList.length; i++) {
+            const result = await client.invoke(
+              new Api.messages.SendMessage({
+                // peer: "two_face_project",
+                noWebpage: true,
+                background: true,
+                clearDraft: true,
+                peer: `${chanelList[i]}`,
+                replyToMsgId: 6872073,
+                message: `${adMessage}`,
+                randomId: Math.floor(Math.random() * 1000000),
+                scheduleDate: 789917,
+              })
+            );
+            console.log(result); // prints the result
+          }
+
+          // setInterval(async () => {}, 5000);
+
+          // process.exit();
+          client.disconnect();
+        })();
       }
-
-      (async function run() {
-        await client.connect(); // This assumes you have already authenticated with .start()
-
-        const result = await client.invoke(
-          new Api.messages.SendMessage({
-            // peer: "two_face_project",
-            noWebpage: true,
-            background: true,
-            clearDraft: true,
-            peer: `${chanelList}`,
-            replyToMsgId: 6872073,
-            message: `${adMessage}`,
-            randomId: Math.floor(Math.random() * 1000000),
-            scheduleDate: 789917,
-          })
-        );
-        console.log(result); // prints the result
-        // process.exit();
-      })();
     }
   } catch (error) {
     console.log(error);
   }
 });
-
-////// =====?
-////// =====?
-////// =====?
-////// =====?
-////// =====?
-////// =====?
-////// =====?
-////// =====?
-////// =====?
-///// Func for send messages to group /////
-// (async function run() {
-//   await client.connect(); // This assumes you have already authenticated with .start()
-
-//   const result = await client.invoke(
-//     new Api.messages.SendMessage({
-//       // peer: "two_face_project",
-//       noWebpage: true,
-//       background: true,
-//       clearDraft: true,
-//       peer: "https://t.me/mariia2208",
-//       replyToMsgId: 6872073,
-//       message: msg.text,
-//       randomId: Math.floor(Math.random() * 1000000),
-//       scheduleDate: 789917,
-//     })
-//   );
-//   console.log(result); // prints the result
-//   // process.exit();
-// })();
