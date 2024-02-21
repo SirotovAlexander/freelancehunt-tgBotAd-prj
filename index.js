@@ -33,7 +33,11 @@ const commands = [
   },
   {
     command: "listcheck",
-    description: "Вывести список каналов для рассылки и текст рекламы",
+    description: "Вывести сохраненный текст рекламы",
+  },
+  {
+    command: "arrchech",
+    description: "Вывести список каналов для рассылки",
   },
   {
     command: "flood",
@@ -70,13 +74,32 @@ bot.on("text", async (msg) => {
     } else if (msg.text == "/listcheck") {
       await bot.sendMessage(
         msg.chat.id,
-        `<b>${adMessage || "Реклама не создана"}</b>\n<b>${
-          chanelList || "Массив каналов не создан"
-        }</b>`,
+        `<b>${adMessage || "Реклама не создана"}</b>\n`,
         {
           parse_mode: "HTML",
         }
       );
+    } else if (msg.text == "/arrchech") {
+      if (chanelList[0] === undefined) {
+        await bot.sendMessage(
+          msg.chat.id,
+          "Заполните список каналов для рассылки!"
+        );
+      } else {
+        let keyboard = [];
+        for (let i = 0; i < chanelList.length; i++) {
+          keyboard.push([
+            {
+              text: `${chanelList[i]}`,
+              callback_data: "delete",
+            },
+          ]);
+        }
+        console.log(keyboard);
+        await bot.sendMessage(msg.chat.id, `Каналы для рассылки`, {
+          reply_markup: { inline_keyboard: keyboard },
+        });
+      }
     } else if (msg.text == "/flood") {
       if (adMessage === null) {
         await bot.sendMessage(msg.chat.id, "Созайте рекламное сообщение!");
