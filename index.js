@@ -129,9 +129,6 @@ bot.on("text", async (msg) => {
             console.log(result); // prints the result
           }
 
-          // setInterval(async () => {}, 5000);
-
-          // process.exit();
           client.disconnect();
         })();
       }
