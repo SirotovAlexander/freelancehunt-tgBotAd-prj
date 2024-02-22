@@ -91,7 +91,7 @@ bot.on("text", async (msg) => {
           keyboard.push([
             {
               text: `${chanelList[i]}`,
-              callback_data: "delete",
+              callback_data: "delete" + i,
             },
           ]);
         }
@@ -136,6 +136,15 @@ bot.on("text", async (msg) => {
         })();
       }
     }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+bot.on("callback_query", async (ctx) => {
+  try {
+    chanelList.splice(ctx.data[ctx.data.length - 1], 1);
+    await bot.deleteMessage(ctx.message.chat.id, ctx.message.message_id);
   } catch (error) {
     console.log(error);
   }
