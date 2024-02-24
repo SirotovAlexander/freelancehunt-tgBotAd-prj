@@ -4,7 +4,7 @@ const { StringSession } = require("telegram/sessions");
 
 require("dotenv").config();
 
-const apiId = 21198973;
+const apiId = 21854456;
 const session = new StringSession(process.env.STRING_SESSION); // You should put your string session here
 const client = new TelegramClient(session, apiId, process.env.API_HASH, {});
 
